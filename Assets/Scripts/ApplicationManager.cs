@@ -14,8 +14,20 @@ public class ApplicationManager : MonoBehaviour
     private void Start()
     {
         var data = _positionDataReader.ReadPositionData();
-        
+        Array.Sort(data, (a, b) => a.RelativeTimestamp.CompareTo(b.RelativeTimestamp));
+        //Array.Sort(data, SortPositionData);
+
         _cubeMovementController.SetPositionData(data);
         _cubeMovementController.SetMovementEnabled(true);
+    }
+
+    private int SortPositionData(PositionData a, PositionData b){
+        if (a.RelativeTimestamp > b.RelativeTimestamp){
+            return 1;
+        } else if (a.RelativeTimestamp < b.RelativeTimestamp){
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
