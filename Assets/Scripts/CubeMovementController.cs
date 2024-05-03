@@ -15,6 +15,8 @@ public class CubeMovementController : MonoBehaviour
     private bool _isMovementEnabled;
 
     public GameObject cubePrefab;
+
+    private List<GameObject> cubes = new List<GameObject>();
     
     public void SetPositionData(List<List<PositionData>> positionData)
     {
@@ -25,7 +27,10 @@ public class CubeMovementController : MonoBehaviour
             GameObject cube = Instantiate(cubePrefab, new Vector3(0, -0.5f, 0), cubePrefab.transform.rotation);
             var positionQueue = cubeData != null ? new Queue<PositionData>(cubeData) : new Queue<PositionData>();
             cube.GetComponent<CubeMovement>().SetPositionQueue(positionQueue);
+
+            cubes.Add(cube);
         }
+
     }
 
     public void SetMovementEnabled(bool isMovementEnabled)
@@ -40,11 +45,8 @@ public class CubeMovementController : MonoBehaviour
             return;
         }
         
-        GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cube");
-        
         foreach (GameObject cube in cubes){
-
-        cube.GetComponent<CubeMovement>().UpdatePosition();
+            cube.GetComponent<CubeMovement>().UpdatePosition();
         }
     }
 }
